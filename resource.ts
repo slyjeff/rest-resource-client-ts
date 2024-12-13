@@ -60,6 +60,19 @@ export class Resource {
         return this.response.ok;
     }
 
+    private checkForStatusCode(statusCode: number): boolean {
+        if (!this.response) {
+            return false;
+        }
+        return this.response.status == statusCode;
+    }
+
+    get isBadRequest(): boolean { return this.checkForStatusCode(400); }
+    get isUnauthorized(): boolean { return this.checkForStatusCode(401); }
+    get isForbidden(): boolean { return this.checkForStatusCode(403); }
+    get isNotFound(): boolean { return this.checkForStatusCode(404); }
+
+
     private getLink(linkName: string) : Link | undefined {
         return this._links.get(linkName)
     }
