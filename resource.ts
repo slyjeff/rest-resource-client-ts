@@ -1,12 +1,14 @@
-﻿import {RestClient} from "./rest-client";
+﻿// noinspection JSUnusedGlobalSymbols
+
+import {RestClient} from "./rest-client";
 
 export type ResourceType<T extends Resource> = new(_restClient: RestClient) => T;
 
 export class LinkParameter {
-    name: string
-    type: string
-    defaultValue: string
-    listOfValues: string[]
+    name: string = "";
+    type: string = "";
+    defaultValue: string = "";
+    listOfValues: string[] = [];
 }
 
 export class Link {
@@ -43,7 +45,7 @@ export class Resource {
     constructor(private readonly _restClient: RestClient) {
     }
 
-    response: Response;
+    response: Response | undefined;
     get statusCode(): number {
         if (!this.response) {
             return 0;
@@ -58,14 +60,14 @@ export class Resource {
         return this.response.ok;
     }
 
-    private getLink(linkName: string) : Link {
+    private getLink(linkName: string) : Link | undefined {
         return this._links.get(linkName)
     }
 
     protected async executeLink<T extends Resource>(r: new(...args : any) => T, linkName: string, values: any = {}) : Promise<T> {
         const link = this.getLink(linkName)
         if (link == null) {
-            return;
+            return new r();
         }
 
         return await this._restClient.executeLink(r, link, values)

@@ -1,4 +1,6 @@
-﻿import {Link, Resource, ResourceType} from "./resource";
+﻿// noinspection JSUnusedGlobalSymbols
+
+import {Link, Resource, ResourceType} from "./resource";
 
 export class RestClientError extends Error {
     constructor(response: Response) {
@@ -12,14 +14,14 @@ export class RestClientError extends Error {
 
 export class RestClient {
     private readonly _baseUrl: string;
-    private _setCookie: string;
+    private _setCookie: string | undefined;
 
     constructor(_baseUrl: string) {
         this._baseUrl = _baseUrl;
     }
 
     //normally this should not be used: the browser handles it, but it needs to be done manually when being used outside a browser (ie: PlayWright)
-    handleCookies: boolean;
+    handleCookies: boolean = false;
     //be default, non success status codes will throw an error. If this is set to false, an empty class can be returned instead which will contain the response
     throwExceptions: boolean = true;
 
@@ -27,9 +29,9 @@ export class RestClient {
         return await this.execute(resourceType, 'GET', path )
     }
 
-    async executeLink<T extends Resource> (resourceType: ResourceType<T>, link: Link, values: any = {}): Promise<T> {
+    async executeLink<T extends Resource> (resourceType: ResourceType<T>, link: Link, values: Record<string,any> = {}): Promise<T> {
         const verb = link.verb ? link.verb : "GET";
-        const params = {};
+        const params: Record<string,any> = {} = {};
         let setParameterFromSource = function (parameter: string, source: any): boolean {
             for (let value in source) {
                 if (parameter.toLowerCase() !== value.toLowerCase()) {
@@ -60,7 +62,7 @@ export class RestClient {
         return await this.execute(resourceType, verb, link.href, params);
     }
 
-    async execute<T extends Resource> (resourceType: ResourceType<T>, verb: string, path: string, params: any = {}): Promise<T> {
+    async execute<T extends Resource> (resourceType: ResourceType<T>, verb: string, path: string, params: Record<string, any> = {}): Promise<T> {
         const url = new URL(this._baseUrl);
         if (path != "") {
             if (path.includes("?")) {
@@ -84,7 +86,7 @@ export class RestClient {
 
         const hasBody = (Object.keys(params).length > 0 && (verb == "POST" || verb == "PUT" || verb == "PATCH"));
 
-        let headers = {
+        let headers: Record<string,string> = {
             'Content-Type': contentType,
             'Accept': 'application/slysoft+json, application/json'
         }
