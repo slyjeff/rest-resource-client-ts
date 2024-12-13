@@ -1,6 +1,7 @@
 ﻿// noinspection JSUnusedGlobalSymbols
 
-import {Link, Resource, ResourceType} from "./resource";
+import {Resource, ResourceType} from "./resource";
+import {Link} from "./link";
 
 export class RestClientError extends Error {
     constructor(response: Response) {
