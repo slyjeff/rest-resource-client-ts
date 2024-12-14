@@ -92,7 +92,7 @@ export class Resource {
 
                 if (this[destinationProperty] instanceof Date) {
                     // @ts-ignore
-                    this[destinationProperty] = new Date(value);
+                    this[destinationProperty] = new Date(value + "Z");
                     continue;
                 }
 
