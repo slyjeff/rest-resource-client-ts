@@ -1,2 +1,2 @@
-﻿export {Resource} from "./resource";
-export {RestClient} from "./rest-client";
+﻿export {Resource} from "/dist/resource";
+export {RestClient} from "/dist/rest-client";
