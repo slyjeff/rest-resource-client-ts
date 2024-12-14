@@ -13,8 +13,9 @@
     "/dist"
   ],
   "scripts": {
-    "build": "tsc && npm run",
-    "prepare": "npm run build"
+    "build": "tsc",
+    "build:defs": "tsc --declaration --outDir .\\dist\\. --emitDeclarationOnly",
+    "prepare": "npm run build && build:defs"
   },
   "devDependencies": {
     "typescript": "^5.7.2"
