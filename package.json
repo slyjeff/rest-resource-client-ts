@@ -11,9 +11,6 @@
   "files": [
     "/dist"
   ],
-  "exports": [
-    "./dist"
-  ],
   "scripts": {
     "build": "tsc",
     "build:defs": "tsc --declaration --outDir .\\dist\\. --emitDeclarationOnly",
