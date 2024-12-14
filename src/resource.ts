@@ -90,6 +90,12 @@ export class Resource {
                     continue;
                 }
 
+                if (this[destinationProperty] instanceof Date) {
+                    // @ts-ignore
+                    this[destinationProperty] = new Date(value);
+                    continue;
+                }
+
                 this[destinationProperty] = value;
             }
         }
