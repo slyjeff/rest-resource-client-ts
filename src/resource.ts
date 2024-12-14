@@ -7,7 +7,7 @@ export type ResourceType<T extends Resource> = new(_restClient: RestClient) => T
 
 export class Resource {
     private readonly _links: Map<string, Link> = new Map<string, Link>();
-    private readonly _originalValues: Map<string, any> = new Map<string, any>();
+    protected readonly originalValues: Map<string, any> = new Map<string, any>();
     constructor(private readonly _restClient: RestClient) {
     }
 
@@ -60,11 +60,11 @@ export class Resource {
         const list: Array<T> = []
 
         propertyName = propertyName.toLowerCase();
-        if (!this._originalValues.has(propertyName)) {
+        if (!this.originalValues.has(propertyName)) {
             return list;
         }
 
-        for (let source of this._originalValues.get(propertyName)) {
+        for (let source of this.originalValues.get(propertyName)) {
             const resource = new resourceType(this._restClient)
             resource.populateData(source)
             list.push(resource);
@@ -76,7 +76,7 @@ export class Resource {
     populateData(source : any) : void {
         for (const sourceProperty in source) {
             const value = source[sourceProperty]
-            this._originalValues.set(sourceProperty.toLowerCase(), value);
+            this.originalValues.set(sourceProperty.toLowerCase(), value);
 
             if (sourceProperty === "_links") {
                 for (let linkName in value) {
