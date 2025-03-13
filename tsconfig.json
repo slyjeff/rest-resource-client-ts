@@ -1,11 +1,14 @@
 ﻿{
-  "compilerOptions": {
-    "target": "es2016",
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",
-    "strict": true,
-    "skipLibCheck": true
-  }
+	"compilerOptions": {
+		"declaration": true, // Generate .d.ts files
+		"emitDeclarationOnly": true, // Only emit .d.ts files
+		"moduleResolution": "node",
+		"target": "es2016",
+		"module": "commonjs",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"outDir": "./dist",
+		"strict": true,
+		"skipLibCheck": true
+	}
 }
