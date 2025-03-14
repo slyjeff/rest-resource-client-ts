@@ -1,6 +1,5 @@
 {
   "name": "@slysoft/rest-resource-client",
-  "type": "module",
   "version": "1.0.0-beta.0",
   "description": "Library for consuming slysoft+json and easily interpreting/calling links",
   "main": "./dist/index.js",
