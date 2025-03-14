@@ -13,8 +13,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "build:defs": "tsc --declaration --outDir .\\dist\\. --emitDeclarationOnly",
-    "prepare": "npm run build && npm run build:defs"
+    "prepare": "npm run build"
   },
   "devDependencies": {
     "typescript": "^5.7.2"
