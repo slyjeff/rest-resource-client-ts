@@ -1,7 +1,6 @@
 ﻿{
   "compilerOptions": {
     "declaration": true,
-    "emitDeclarationOnly": true,
     "moduleResolution": "node",
     "target": "es2016",
     "module": "commonjs",
