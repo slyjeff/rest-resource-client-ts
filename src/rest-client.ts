@@ -64,6 +64,8 @@ export class RestClient {
     }
 
     async execute<T extends Resource> (resourceType: ResourceType<T>, verb: string, path: string, params: Record<string, any> = {}): Promise<T> {
+        params = this.convertDatesToStrings(params);
+
         const url = new URL(this._baseUrl);
         if (path != "") {
             if (path.includes("?")) {
@@ -144,6 +146,24 @@ export class RestClient {
         resource.response = responseToReturn;
 
         return resource;
+    }
+
+    convertDatesToStrings(params: Record<string, any> = {}): Record<string, any> {
+        const result: Record<string, any> = {};
+
+        for (const key in params) {
+            if (Object.prototype.hasOwnProperty.call(params, key)) {
+                const value = params[key];
+
+                if (value instanceof Date) {
+                    result[key] = value.toISOString(); // Convert Date to ISO string
+                } else {
+                    result[key] = value; // Keep other values as they are
+                }
+            }
+        }
+
+        return result;
     }
 
     private responseIsJson(response: Response): boolean {
