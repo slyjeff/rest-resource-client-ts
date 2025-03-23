@@ -100,6 +100,7 @@ export class RestClient {
 
         let response: Response
         if (hasBody) {
+            console.log(JSON.stringify(params))
             response = await fetch(url.toString(), {
                 credentials: 'include',
                 method: verb,
