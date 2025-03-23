@@ -64,7 +64,7 @@ export class RestClient {
     }
 
     async execute<T extends Resource> (resourceType: ResourceType<T>, verb: string, path: string, params: Record<string, any> = {}): Promise<T> {
-        params = this.convertDatesToStrings(params);
+        //params = this.convertDatesToStrings(params);
 
         const url = new URL(this._baseUrl);
         if (path != "") {
