@@ -7,6 +7,7 @@ export type ResourceType<T extends Resource> = new(_restClient: RestClient) => T
 
 export class Resource {
     private readonly _links: Map<string, Link> = new Map<string, Link>();
+    private readonly _lists: Map<string, object> = new Map<string, object>();
     protected readonly originalValues: Map<string, any> = new Map<string, any>();
     constructor(private readonly _restClient: RestClient) {
     }
@@ -57,6 +58,10 @@ export class Resource {
     }
 
     protected getResourceList<T extends Resource>(resourceType: ResourceType<T>, propertyName: string): T[] {
+        if (this._lists.has(propertyName)) {
+            return this._lists.get(propertyName) as T[];
+        }
+
         const list: Array<T> = []
 
         propertyName = propertyName.toLowerCase();
@@ -69,6 +74,8 @@ export class Resource {
             resource.populateData(source)
             list.push(resource);
         }
+
+        this._lists.set(propertyName, list);
 
         return list;
     }
