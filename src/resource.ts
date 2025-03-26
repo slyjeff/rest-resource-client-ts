@@ -66,6 +66,7 @@ export class Resource {
 
         propertyName = propertyName.toLowerCase();
         if (!this.originalValues.has(propertyName)) {
+            this._lists.set(propertyName, list);
             return list;
         }
 
