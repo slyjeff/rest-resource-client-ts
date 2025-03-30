@@ -95,7 +95,7 @@ export class RestClient {
         if (this.handleCookies) {
             if (this._setCookie) {
                 headers['Cookie'] = this._setCookie;
-
+            }
         }
 
         let response: Response
