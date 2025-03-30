@@ -92,8 +92,10 @@ export class RestClient {
             'Accept': 'application/slysoft+json, application/json'
         }
 
-        if (this._setCookie) {
-            headers['Cookie'] = this._setCookie;
+        if (this.handleCookies) {
+            if (this._setCookie) {
+                headers['Cookie'] = this._setCookie;
+
         }
 
         let response: Response
