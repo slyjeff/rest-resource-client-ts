@@ -17,14 +17,17 @@ export class RestClient {
     private readonly _baseUrl: string;
     private _setCookie: string | undefined;
 
+    //normally this should not be used: the browser will handle cookies, but in some situations, the user will need to inject logic to store the cookie
+    public cookieSetter: (cookie: string) => void;
+    //normally this should not be used: the browser handles it, but it needs to be done manually when being used outside a browser (ie: PlayWright)
+    public handleCookies: boolean = false;
+    //be default, non success status codes will throw an error. If this is set to false, an empty class can be returned instead which will contain the response
+    public throwExceptions: boolean = true;
+
     constructor(_baseUrl: string) {
         this._baseUrl = _baseUrl;
+        this.cookieSetter = (cookie: string) => this._setCookie = cookie;
     }
-
-    //normally this should not be used: the browser handles it, but it needs to be done manually when being used outside a browser (ie: PlayWright)
-    handleCookies: boolean = false;
-    //be default, non success status codes will throw an error. If this is set to false, an empty class can be returned instead which will contain the response
-    throwExceptions: boolean = true;
 
     async get<T extends Resource> (resourceType: ResourceType<T>, path: string = ""): Promise<T> {
         return await this.execute(resourceType, 'GET', path )
@@ -124,9 +127,9 @@ export class RestClient {
         }
 
         if (this.handleCookies) {
-            const setCookie = response.headers.get('set-cookie');
-            if (setCookie) {
-                this._setCookie = setCookie;
+            const cookie = response.headers.get('set-cookie');
+            if (cookie) {
+                this.cookieSetter(cookie)
             }
         }
 
