@@ -58,13 +58,12 @@ export class Resource {
     }
 
     protected getResourceList<T extends Resource>(resourceType: ResourceType<T>, propertyName: string): T[] {
+        propertyName = propertyName.toLowerCase();
         if (this._lists.has(propertyName)) {
             return this._lists.get(propertyName) as T[];
         }
 
         const list: Array<T> = []
-
-        propertyName = propertyName.toLowerCase();
         if (!this.originalValues.has(propertyName)) {
             this._lists.set(propertyName, list);
             return list;
