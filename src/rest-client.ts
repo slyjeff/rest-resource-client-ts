@@ -46,7 +46,9 @@ export class RestClient {
 
                 if (source[value] instanceof Date) {
                     params[parameter] = source[value].toISOString();
+                    return true;
                 }
+
                 params[parameter] = source[value];
                 return true;
             }
