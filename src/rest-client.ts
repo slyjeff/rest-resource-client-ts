@@ -39,6 +39,14 @@ export class RestClient {
                     continue;
                 }
 
+                //don't populate null values, but do count it as "Found"
+                if (source[value] === undefined || source[value] === null) {
+                    return true;
+                }
+
+                if (source[value] instanceof Date) {
+                    params[parameter] = source[value].toISOString();
+                }
                 params[parameter] = source[value];
                 return true;
             }
