@@ -70,7 +70,10 @@ export class RestClient {
             }
         }
 
-        let href = link.href;
+        console.log(link.href)
+        let href = decodeURIComponent(link.href);
+        console.log(href)
+
         if (link.templated) {
             for (const [key, value] of Object.entries(values)) {
                 const regex = new RegExp(`%7B${key}%7D`, 'gi');
