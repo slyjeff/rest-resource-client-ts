@@ -31,7 +31,9 @@ export class Link {
             }
         }
     }
+
     href: string;
+    templated: boolean = false;
     verb: string;
     parameters: LinkParameter[] = [];
     resource: Resource;

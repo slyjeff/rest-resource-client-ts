@@ -70,7 +70,15 @@ export class RestClient {
             }
         }
 
-        return await this.execute(resourceType, verb, link.href, params);
+        let href = link.href;
+        if (link.templated) {
+            for (const [key, value] of Object.entries(values)) {
+                const regex = new RegExp(`{${key}}`, 'gi');
+                href = href.replace(regex, String(value));
+            }
+        }
+
+        return await this.execute(resourceType, verb, href, params);
     }
 
     async execute<T extends Resource> (resourceType: ResourceType<T>, verb: string, path: string, params: Record<string, any> = {}): Promise<T> {
