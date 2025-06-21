@@ -71,13 +71,10 @@ export class RestClient {
         }
 
         let href = link.href;
-        console.log("templated:" + link.templated);
         if (link.templated) {
             for (const [key, value] of Object.entries(values)) {
                 const regex = new RegExp(`{${key}}`, 'gi');
-                console.log(String(value))
                 href = href.replace(regex, String(value));
-                console.log(String(value))
             }
         }
 
@@ -116,8 +113,6 @@ export class RestClient {
         if (this._setCookie) {
             headers['Cookie'] = this._setCookie;
         }
-
-        console.log(url.toString());
 
         let response: Response
         if (hasBody) {
