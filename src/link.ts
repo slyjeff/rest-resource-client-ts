@@ -13,6 +13,7 @@ export class Link {
     constructor(link: any, resource: Resource) {
         this.resource = resource;
         this.href = link.href;
+        this.templated = link.templated;
         this.verb = link.verb;
 
         if (link.fields) {
