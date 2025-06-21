@@ -70,13 +70,15 @@ export class RestClient {
             }
         }
 
-        let href = decodeURIComponent(link.href);
+        let href = link.href;
         if (link.templated) {
+            href = href.replace(/%7B/g, '{').replace(/%7D/g, '}');
             for (const [key, value] of Object.entries(values)) {
                 const regex = new RegExp(`{${key}}`, 'gi');
                 href = href.replace(regex, String(value));
             }
         }
+
 
         return await this.execute(resourceType, verb, href, params);
     }
