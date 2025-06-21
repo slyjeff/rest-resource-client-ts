@@ -71,6 +71,7 @@ export class RestClient {
         }
 
         let href = link.href;
+        console.log("templated:" + link.templated);
         if (link.templated) {
             for (const [key, value] of Object.entries(values)) {
                 const regex = new RegExp(`{${key}}`, 'gi');
