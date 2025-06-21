@@ -114,6 +114,8 @@ export class RestClient {
             headers['Cookie'] = this._setCookie;
         }
 
+        console.log(url.toString());
+
         let response: Response
         if (hasBody) {
             response = await fetch(url.toString(), {
