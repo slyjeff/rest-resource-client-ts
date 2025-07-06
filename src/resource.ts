@@ -3,13 +3,13 @@
 import {RestClient} from "./rest-client";
 import {Link} from "./link";
 
-export type ResourceType<T extends Resource> = new(_restClient: RestClient) => T;
+export type ResourceType<T extends Resource> = new(_restClient?: RestClient) => T;
 
 export class Resource {
     private readonly _links: Map<string, Link> = new Map<string, Link>();
     private readonly _lists: Map<string, object> = new Map<string, object>();
     protected readonly originalValues: Map<string, any> = new Map<string, any>();
-    constructor(private readonly _restClient: RestClient) {
+    constructor(private readonly _restClient?: RestClient) {
     }
 
     response: Response | undefined;
@@ -45,6 +45,10 @@ export class Resource {
     }
 
     protected async executeLink<T extends Resource>(r: new(...args : any) => T, linkName: string, values: any = {}) : Promise<T> {
+        if (!this._restClient) {
+            return new r();
+        }
+
         const link = this.getLink(linkName)
         if (link == null) {
             return new r();
